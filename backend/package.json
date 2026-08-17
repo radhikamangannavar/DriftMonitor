@@ -1,0 +1,13 @@
+{
+  "name": "drift-monitor-backend",
+  "version": "1.0.0",
+  "description": "Backend for the Data Drift Detection and Monitoring System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
