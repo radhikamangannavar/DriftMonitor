@@ -44,10 +44,9 @@ const analysisSchema = new mongoose.Schema(
     },
 
     overallConfidence: {
-      type: Number,
-      min: 0,
-      max: 1,
-    },
+  type: String,
+  enum: ["LOW", "MEDIUM", "HIGH"],
+},
 
     affectedCoverage: {
       type: Number,

@@ -1,8 +1,12 @@
 const express = require("express");
-const { create } = require("../controllers/analysisController");
+const {
+  create,
+  getById,
+} = require("../controllers/analysisController");
 
 const router = express.Router();
 
 router.post("/", create);
+router.get("/:id", getById);
 
 module.exports = router;

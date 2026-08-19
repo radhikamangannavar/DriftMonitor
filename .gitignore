@@ -18,8 +18,7 @@ __pycache__/
 venv/
 
 # Runtime files
-backend/temp/uploads/*
-backend/temp/reports/*
+backend/temp/
 
 # OS / IDE
 .DS_Store
@@ -27,3 +26,5 @@ backend/temp/reports/*
 
 # Logs
 *.log
+# Generated reports
+drift_engine/reports/*.json
