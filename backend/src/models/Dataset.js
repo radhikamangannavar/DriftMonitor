@@ -29,7 +29,11 @@ const datasetSchema = new mongoose.Schema(
       ref: "Organization",
       required: true,
     },
-
+modelId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Model",
+  required: true,
+},
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

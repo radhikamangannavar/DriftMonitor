@@ -1,16 +1,33 @@
 const fs = require("fs/promises");
 
 const validateDataset = async (req, res, next) => {
-  const { name, type, organizationId, uploadedBy } = req.body;
+  const {
+    name,
+    type,
+    modelId,
+  } = req.body;
 
-  if (!name || !type || !organizationId || !uploadedBy) {
+  const organizationId =
+    req.session.organizationId;
+
+  const uploadedBy =
+    req.session.userId;
+
+  if (
+    !name ||
+    !type ||
+    !organizationId ||
+    !modelId ||
+    !uploadedBy
+  ) {
     if (req.file?.path) {
       await fs.unlink(req.file.path).catch(() => {});
     }
 
     return res.status(400).json({
       success: false,
-      message: "Name, type, organizationId and uploadedBy are required",
+      message:
+        "Name, type, modelId and authenticated session are required",
     });
   }
 
@@ -21,7 +38,15 @@ const validateDataset = async (req, res, next) => {
 
     return res.status(400).json({
       success: false,
-      message: "Dataset type must be baseline or current",
+      message:
+        "Dataset type must be baseline or current",
+    });
+  }
+
+  if (!req.file) {
+    return res.status(400).json({
+      success: false,
+      message: "CSV file is required",
     });
   }
 

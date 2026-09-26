@@ -23,6 +23,8 @@ def build_drift_result(
         result["tests"]["chi_square"] = chi_square
 
     if categorical_evidence is not None:
-        result["evidence"]["categorical"] = categorical_evidence
+        result["evidence"]["categorical"] = (
+            categorical_evidence
+        )
 
     return result

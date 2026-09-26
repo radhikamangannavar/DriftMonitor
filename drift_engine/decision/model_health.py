@@ -1,63 +1,102 @@
 def assess_model_health(model_evidence):
-    affected_coverage = model_evidence["affected_coverage"]
-    high_importance_coverage = model_evidence["high_importance_coverage"]
-    overall_confidence = model_evidence["overall_confidence"]
-
-    top_contributors = model_evidence["top_contributors"]
-
-    high_severity_features = [
-        feature
-        for feature in top_contributors
-        if feature["severity"] == "HIGH"
+    affected_coverage = model_evidence[
+        "affected_coverage"
     ]
 
-    high_importance_features = [
-        feature
-        for feature in top_contributors
-        if feature["importance"] == "HIGH"
+    high_importance_coverage = model_evidence[
+        "high_importance_coverage"
     ]
 
-    high_confidence_features = [
-        feature
-        for feature in top_contributors
-        if feature["confidence"] == "HIGH"
+    high_severity_count = model_evidence[
+        "high_severity_features"
     ]
 
-    if (
-        len(high_importance_features) >= 2
-        and len(high_severity_features) >= 2
-        and len(high_confidence_features) >= 2
+    medium_severity_count = model_evidence[
+        "medium_severity_features"
+    ]
+
+    overall_confidence = model_evidence[
+        "overall_confidence"
+    ]
+
+    affected_features = model_evidence[
+        "affected_features"
+    ]
+
+    # --------------------------------------------------
+    # No affected features
+    # --------------------------------------------------
+
+    if affected_features == 0:
+        status = "HEALTHY"
+
+    # --------------------------------------------------
+    # CRITICAL
+    #
+    # Multiple high-severity features AND meaningful
+    # high-importance impact.
+    #
+    # Confidence must be at least MEDIUM.
+    # --------------------------------------------------
+
+    elif (
+        high_severity_count >= 2
         and high_importance_coverage >= 0.5
+        and overall_confidence in ["MEDIUM", "HIGH"]
     ):
         status = "CRITICAL"
 
+    # --------------------------------------------------
+    # HIGH
+    #
+    # Strong high-severity evidence with reasonable
+    # confidence, OR broad high-confidence drift.
+    # --------------------------------------------------
+
     elif (
         (
-            len(high_importance_features) >= 1
-            and len(high_severity_features) >= 1
-            and len(high_confidence_features) >= 1
+            high_severity_count >= 1
+            and overall_confidence in ["MEDIUM", "HIGH"]
         )
-        or affected_coverage >= 0.5
+        or (
+            affected_coverage >= 0.75
+            and overall_confidence == "HIGH"
+        )
     ):
         status = "HIGH"
 
+    # --------------------------------------------------
+    # MEDIUM
+    #
+    # Meaningful drift exists, but there is not enough
+    # evidence to classify the model as HIGH/CRITICAL.
+    #
+    # Require at least MEDIUM confidence for coverage-based
+    # escalation.
+    # --------------------------------------------------
+
     elif (
-        affected_coverage > 0
+        overall_confidence in ["MEDIUM", "HIGH"]
         and (
-            high_importance_coverage > 0
-            or overall_confidence in ["MEDIUM", "HIGH"]
+            affected_coverage >= 0.25
+            or medium_severity_count >= 1
         )
     ):
         status = "MEDIUM"
 
-    elif affected_coverage > 0:
-        status = "LOW"
+    # --------------------------------------------------
+    # LOW
+    #
+    # Drift exists, but evidence is weak / low confidence.
+    # --------------------------------------------------
 
     else:
-        status = "HEALTHY"
+        status = "LOW"
 
     return {
         "status": status,
-        "contributing_features": top_contributors,
+        "contributing_features": model_evidence[
+            "top_contributors"
+        ],
         "evidence": model_evidence,
     }

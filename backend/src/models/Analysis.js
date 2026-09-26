@@ -7,7 +7,11 @@ const analysisSchema = new mongoose.Schema(
       ref: "Organization",
       required: true,
     },
-
+    modelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Model",
+      required: true,
+    },
     baselineDatasetId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Dataset",
@@ -42,6 +46,9 @@ const analysisSchema = new mongoose.Schema(
         "Retraining Review",
       ],
     },
+    report: {
+  type: mongoose.Schema.Types.Mixed,
+},
 
     overallConfidence: {
   type: String,

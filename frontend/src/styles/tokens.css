@@ -1,0 +1,134 @@
+:root {
+  /* ==================================================
+     COLORS
+  ================================================== */
+
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-soft: #f7f7f5;
+
+  --text-primary: #18181b;
+  --text-secondary: #68686f;
+  --text-muted: #9999a0;
+
+  --border: rgba(24, 24, 27, 0.08);
+  --border-strong: rgba(24, 24, 27, 0.14);
+
+  /* Brand accents */
+  --accent-blue: #4285f4;
+  --accent-violet: #7c5cff;
+  --accent-red: #ea4335;
+  --accent-yellow: #fbbc04;
+
+  /* Brand tint — intentionally subtle */
+--brand-violet: #7c5cff;
+--brand-violet-soft: rgba(124, 92, 255, 0.08);
+--brand-violet-faint: rgba(124, 92, 255, 0.05);
+
+  /* Semantic states */
+  --success: #16803c;
+  --warning: #b86b00;
+  --danger: #c62828;
+
+/* ==================================================
+   TYPOGRAPHY
+================================================== */
+
+--font-sans:
+  Inter,
+  "SF Pro Display",
+  "SF Pro Text",
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
+
+/* Application text */
+--text-xs: 12px;
+--text-sm: 14px;
+--text-base: 15px;
+--text-md: 17px;
+
+/* Application headings */
+--heading-sm: 26px;
+--heading-md: 36px;
+
+/* Editorial headings — landing / major hero sections */
+--heading-lg: clamp(3rem, 5.2vw, 5.8rem);
+--heading-xl: clamp(4rem, 6.8vw, 7rem);
+  /* ==================================================
+     SPACING
+  ================================================== */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-18: 72px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+
+  /* ==================================================
+     LAYOUT
+  ================================================== */
+
+  --content-width: 1280px;
+  --page-padding: 48px;
+
+  --navbar-height: 72px;
+
+
+  /* ==================================================
+     RADII
+  ================================================== */
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-pill: 999px;
+
+
+  /* ==================================================
+     SHADOWS
+  ================================================== */
+
+  --shadow-soft:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 10px 35px rgba(0, 0, 0, 0.045);
+
+  --shadow-button:
+    0 4px 12px rgba(0, 0, 0, 0.08);
+
+
+  /* ==================================================
+     MOTION
+  ================================================== */
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --transition-fast: 180ms var(--ease);
+  --transition-base: 260ms var(--ease);
+}
+/* ==================================================
+   SUBTLE BRAND TINT
+================================================== */
+
+.brand-accent {
+  color: var(--brand-violet);
+}
+
+.brand-tint {
+  background: var(--brand-violet-faint);
+}
+
+.brand-tint-border {
+  border-color: rgba(124, 92, 255, 0.16);
+}
