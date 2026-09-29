@@ -715,7 +715,6 @@
       transparent
     );
 }
-
 /* ==================================================
    FINAL CTA
 ================================================== */
@@ -737,14 +736,6 @@
   background: #fff;
 }
 
-.final-cta-section h2 {
-  position: relative;
-
-  z-index: 2;
-
-  margin-bottom: 42px;
-}
-
 .final-cta-glow {
   position: absolute;
 
@@ -756,14 +747,33 @@
   background:
     radial-gradient(
       ellipse,
-      rgba(66, 133, 244, 0.10),
-      rgba(124, 92, 255, 0.07),
+      rgba(66, 133, 244, 0.075),
+      rgba(124, 92, 255, 0.05),
       transparent 70%
     );
 
   filter: blur(30px);
+
+  /* Decorative only — never capture clicks */
+  pointer-events: none;
 }
 
+.final-cta-section .section-kicker {
+  position: relative;
+  z-index: 2;
+}
+
+.final-cta-section h2 {
+  position: relative;
+  z-index: 2;
+
+  margin-bottom: 42px;
+}
+
+.final-cta-section .primary-cta {
+  position: relative;
+  z-index: 3;
+}
 /* ==================================================
    FOOTER
 ================================================== */

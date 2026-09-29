@@ -181,7 +181,7 @@ function Navbar() {
         </Link>
 
         <Link
-          to="/login"
+          to="/register"
           className="nav-cta"
         >
           Get started

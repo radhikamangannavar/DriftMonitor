@@ -3,10 +3,8 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-
 import LandingPage from "../features/landing/LandingPage";
 import LoginPage from "../features/auth/LoginPage";
-
 import WorkspaceLayout from "../features/workspace/WorkspaceLayout";
 import OverviewPage from "../features/workspace/OverviewPage";
 import ModelsPage from "../features/workspace/ModelsPage";
@@ -18,7 +16,19 @@ import AnalysesPage from "../features/analyses/AnalysesPage";
 import AnalysisDetailPage from "../features/analyses/AnalysisDetailPage";
 import NewAnalysisPage from "../features/analyses/NewAnalysisPage";
 import ModelConfigurationPage from "../features/workspace/ModelConfigurationPage";
+import RegisterPage from "../features/auth/RegisterPage";
+import OrganizationSettingsPage from "../features/settings/OrganizationSettingsPage";
+function AdminRoute({ children }) {
+  const user = JSON.parse(
+    sessionStorage.getItem("driftmonitor_user") || "null"
+  );
 
+  if (!user || user.role !== "admin") {
+    return <Navigate to="/app" replace />;
+  }
+
+  return children;
+}
 function Router() {
   return (
     <Routes>
@@ -33,6 +43,11 @@ function Router() {
       <Route
         path="/login"
         element={<LoginPage />}
+      />
+
+      <Route
+        path="/register"
+        element={<RegisterPage />}
       />
 
       {/* AUTHENTICATED WORKSPACE */}
@@ -87,13 +102,13 @@ function Router() {
 />
 
         <Route
-          path="settings"
-          element={
-            <Placeholder
-              title="Settings"
-            />
-          }
-        />
+  path="settings"
+  element={
+    <AdminRoute>
+      <OrganizationSettingsPage />
+    </AdminRoute>
+  }
+/>
       </Route>
 
       <Route
@@ -107,22 +122,6 @@ function Router() {
       />
 
     </Routes>
-  );
-}
-
-function Placeholder({ title }) {
-  return (
-    <div
-      style={{
-        minHeight: "500px",
-        display: "grid",
-        placeItems: "center",
-        color: "#9999a0",
-        fontSize: "13px",
-      }}
-    >
-      {title} — next
-    </div>
   );
 }
 

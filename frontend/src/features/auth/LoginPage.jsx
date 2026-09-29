@@ -18,17 +18,13 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,10 +32,7 @@ function LoginPage() {
     setError("");
 
     if (!email || !password) {
-      setError(
-        "Enter your email and password."
-      );
-
+      setError("Enter your email and password.");
       return;
     }
 
@@ -47,16 +40,14 @@ function LoginPage() {
       setLoading(true);
 
       const result = await loginUser(
-  email.trim(),
-  password
-);
+        email.trim(),
+        password
+      );
 
-sessionStorage.setItem(
-  "driftmonitor_user",
-  JSON.stringify(result.data)
-);
-
-navigate("/app");
+      sessionStorage.setItem(
+        "driftmonitor_user",
+        JSON.stringify(result.data)
+      );
 
       navigate("/app");
     } catch (err) {
@@ -94,15 +85,16 @@ navigate("/app");
           to="/"
           className="auth-brand"
         >
-          <span className="auth-brand-symbol">
+          <span
+            className="auth-brand-symbol"
+            aria-hidden="true"
+          >
             <span />
             <span />
             <b />
           </span>
 
-          <span>
-            DriftMonitor
-          </span>
+          <span>DriftMonitor</span>
         </Link>
 
         <Link
@@ -123,7 +115,6 @@ navigate("/app");
 
           <div className="auth-intro-label">
             <Activity size={14} />
-
             MODEL OBSERVABILITY
           </div>
 
@@ -158,144 +149,164 @@ navigate("/app");
         </section>
 
         {/* --------------------------------
-            Login form
+            Login column
         --------------------------------- */}
 
-        <section className="login-panel">
+        <div className="login-column">
 
-          <div className="login-heading">
-            <div className="login-mark">
-              <Activity size={17} />
-            </div>
+          <section className="login-panel">
 
-            <div>
-              <h2>
-                Welcome back
-              </h2>
-
-              <p>
-                Sign in to your workspace.
-              </p>
-            </div>
-          </div>
-
-          <form
-            className="login-form"
-            onSubmit={handleSubmit}
-          >
-
-            <label className="field">
-              <span>
-                Email
-              </span>
-
-              <input
-                type="email"
-                placeholder="you@company.com"
-                value={email}
-                onChange={(event) =>
-                  setEmail(
-                    event.target.value
-                  )
-                }
-                autoComplete="email"
-                disabled={loading}
-              />
-            </label>
-
-            <label className="field">
-              <div className="field-label-row">
-                <span>
-                  Password
-                </span>
-
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() =>
-                    setShowPassword(
-                      (current) =>
-                        !current
-                    )
-                  }
-                  tabIndex={-1}
-                >
-                  {showPassword ? (
-                    <>
-                      <EyeOff size={14} />
-                      Hide
-                    </>
-                  ) : (
-                    <>
-                      <Eye size={14} />
-                      Show
-                    </>
-                  )}
-                </button>
+            <div className="login-heading">
+              <div className="login-mark">
+                <Activity size={17} />
               </div>
 
-              <div className="password-input">
+              <div>
+                <h2>
+                  Welcome back
+                </h2>
+
+                <p>
+                  Sign in to your workspace.
+                </p>
+              </div>
+            </div>
+
+            <form
+              className="login-form"
+              onSubmit={handleSubmit}
+            >
+
+              <label className="field">
+                <span>
+                  Email
+                </span>
+
                 <input
-                  type={
-                    showPassword
-                      ? "text"
-                      : "password"
-                  }
-                  placeholder="Enter your password"
-                  value={password}
+                  type="email"
+                  placeholder="you@company.com"
+                  value={email}
                   onChange={(event) =>
-                    setPassword(
+                    setEmail(
                       event.target.value
                     )
                   }
-                  autoComplete="current-password"
+                  autoComplete="email"
                   disabled={loading}
                 />
-              </div>
-            </label>
+              </label>
 
-            {error && (
-              <div className="login-error">
-                <span className="error-dot" />
+              <label className="field">
 
-                {error}
-              </div>
-            )}
+                <div className="field-label-row">
+                  <span>
+                    Password
+                  </span>
 
-            <button
-              type="submit"
-              className="login-submit"
-              disabled={loading}
-            >
-              <span>
-                {loading
-                  ? "Signing in..."
-                  : "Sign in"}
-              </span>
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() =>
+                      setShowPassword(
+                        (current) =>
+                          !current
+                      )
+                    }
+                    tabIndex={-1}
+                  >
+                    {showPassword ? (
+                      <>
+                        <EyeOff size={14} />
+                        Hide
+                      </>
+                    ) : (
+                      <>
+                        <Eye size={14} />
+                        Show
+                      </>
+                    )}
+                  </button>
+                </div>
 
-              {!loading && (
-                <ArrowRight size={16} />
+                <div className="password-input">
+                  <input
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(event) =>
+                      setPassword(
+                        event.target.value
+                      )
+                    }
+                    autoComplete="current-password"
+                    disabled={loading}
+                  />
+                </div>
+
+              </label>
+
+              {error && (
+                <div className="login-error">
+                  <span className="error-dot" />
+                  {error}
+                </div>
               )}
-            </button>
 
-          </form>
+              <button
+                type="submit"
+                className="login-submit"
+                disabled={loading}
+              >
+                <span>
+                  {loading
+                    ? "Signing in..."
+                    : "Sign in"}
+                </span>
+
+                {!loading && (
+                  <ArrowRight size={16} />
+                )}
+              </button>
+
+            </form>
+
+          </section>
+
+          {/* --------------------------------
+              Page-level footer
+          --------------------------------- */}
 
           <div className="login-footer">
-            <span>
-              Secure session-based
-              authentication
-            </span>
+            <div className="login-footer-meta">
+              <span>
+                Secure session-based authentication
+              </span>
 
-            <span className="login-footer-dot">
-              ·
-            </span>
+              <span className="login-footer-dot">
+                ·
+              </span>
 
-            <span>
-              DriftMonitor
-            </span>
+              <span>
+                DriftMonitor
+              </span>
+            </div>
+
+            <div className="login-register-link">
+              <span>
+                Don't have an account?
+              </span>
+
+              <Link to="/register">
+                Create workspace
+              </Link>
+            </div>
           </div>
 
-        </section>
+        </div>
 
       </main>
 

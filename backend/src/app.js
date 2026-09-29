@@ -58,6 +58,7 @@ app.use(
 app.use("/api/health", healthRoutes);
 
 app.use("/api/auth", authRoutes);
+
 // Admin only
 app.use(
   "/api/organizations",
@@ -73,12 +74,15 @@ app.use(
   userRoutes
 );
 
-// Admin + Analyst
+// Models
+// Role permissions are handled inside modelRoutes.
 app.use(
   "/api/models",
+  requireAuth,
   modelRoutes
 );
 
+// Admin + Analyst
 app.use(
   "/api/datasets",
   requireAuth,
@@ -86,12 +90,14 @@ app.use(
   datasetRoutes
 );
 
+// Analysis permissions are handled per route
+// so Viewers can access read-only analysis results.
 app.use(
   "/api/analyses",
   requireAuth,
-  requireRole("admin", "analyst"),
   analysisRoutes
 );
+
 // --------------------------------------------------
 // Error handler
 // MUST remain after all routes

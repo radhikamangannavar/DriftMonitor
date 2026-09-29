@@ -20,6 +20,7 @@ function ModelsPage() {
   );
 
   const organizationId = user?.organizationId;
+  const isViewer = user?.role === "viewer";
 
   useEffect(() => {
     async function loadModels() {
@@ -51,6 +52,7 @@ function ModelsPage() {
 
   return (
     <div className="models-page">
+
       {/* INTRO */}
       <section className="models-intro">
         <div>
@@ -68,13 +70,15 @@ function ModelsPage() {
           </p>
         </div>
 
-        <Link
-          to="/app/models/new"
-          className="models-create-button"
-        >
-          <Plus size={14} />
-          New model
-        </Link>
+        {!isViewer && (
+          <Link
+            to="/app/models/new"
+            className="models-create-button"
+          >
+            <Plus size={14} />
+            New model
+          </Link>
+        )}
       </section>
 
       {/* ERROR */}
@@ -98,6 +102,7 @@ function ModelsPage() {
 
       {/* MODEL LIST */}
       <section className="models-list-section">
+
         <div className="models-list-header">
           <span>MODEL</span>
           <span>MONITORING</span>
@@ -126,17 +131,20 @@ function ModelsPage() {
             <h2>Nothing here yet.</h2>
 
             <p>
-              Create your first model and connect it
-              to DriftMonitor.
+              {isViewer
+                ? "No models are available in your organization yet."
+                : "Create your first model and connect it to DriftMonitor."}
             </p>
 
-            <Link
-              to="/app/models/new"
-              className="models-empty-button"
-            >
-              Create model
-              <ArrowUpRight size={14} />
-            </Link>
+            {!isViewer && (
+              <Link
+                to="/app/models/new"
+                className="models-empty-button"
+              >
+                Create model
+                <ArrowUpRight size={14} />
+              </Link>
+            )}
           </div>
         )}
 
@@ -145,8 +153,10 @@ function ModelsPage() {
           models.length > 0 &&
           models.map((model) => {
             const configuration = model.configuration || {};
+
             const riskProfile =
               configuration.riskProfile || "standard";
+
             const psiThreshold =
               configuration.psi?.threshold;
 
@@ -157,6 +167,7 @@ function ModelsPage() {
                 className="models-row"
               >
                 <div className="models-row-name">
+
                   <div className="models-row-title">
                     <Gauge size={16} />
 
@@ -166,9 +177,11 @@ function ModelsPage() {
                   <span>
                     {riskProfile} risk profile
                   </span>
+
                 </div>
 
                 <div className="models-row-monitoring">
+
                   <span className="models-risk">
                     {riskProfile}
                   </span>
@@ -179,6 +192,7 @@ function ModelsPage() {
                       {psiThreshold ?? "—"}
                     </strong>
                   </span>
+
                 </div>
 
                 <ChevronRight
@@ -188,6 +202,7 @@ function ModelsPage() {
               </Link>
             );
           })}
+
       </section>
     </div>
   );

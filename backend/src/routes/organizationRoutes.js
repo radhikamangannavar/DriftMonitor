@@ -1,8 +1,17 @@
 const express = require("express");
-const { create } = require("../controllers/organizationController");
+
+const {
+  create,
+  getCurrentOrganization,
+  updateCurrentOrganization,
+} = require("../controllers/organizationController");
 
 const router = express.Router();
-const validateOrganization = require("../middleware/validateOrganization");
-router.post("/", validateOrganization, create);
+
+router.post("/", create);
+
+router.get("/me", getCurrentOrganization);
+
+router.patch("/me", updateCurrentOrganization);
 
 module.exports = router;

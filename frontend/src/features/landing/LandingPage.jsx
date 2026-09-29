@@ -313,7 +313,7 @@ function LandingPage() {
           </h2>
 
           <Link
-            to="/login"
+            to="/register"
             className="primary-cta"
           >
             Get started

@@ -21,7 +21,9 @@ function OverviewPage() {
   const user = JSON.parse(
     sessionStorage.getItem("driftmonitor_user") || "null"
   );
-
+const canCreateModel =
+  user?.role === "admin" || user?.role === "analyst";
+  
   useEffect(() => {
     async function loadModels() {
       if (!user?.organizationId) {
@@ -225,24 +227,25 @@ function OverviewPage() {
           !error &&
           models.length === 0 && (
             <div className="empty-state">
-
               <h3>
-                No models yet
-              </h3>
+  No models yet
+</h3>
 
-              <p>
-                Create your first model to
-                begin monitoring production
-                behavior.
-              </p>
+<p>
+  {canCreateModel
+    ? "Create your first model to begin monitoring production behavior."
+    : "Models created in your organization will appear here for monitoring."}
+</p>
 
-              <Link
-                to="/app/models"
-                className="empty-state-action"
-              >
-                Add a model
-                <ArrowUpRight size={14} />
-              </Link>
+              {canCreateModel && (
+  <Link
+    to="/app/models/new"
+    className="empty-state-action"
+  >
+    Add a model
+    <ArrowUpRight size={14} />
+  </Link>
+)}
 
             </div>
           )}

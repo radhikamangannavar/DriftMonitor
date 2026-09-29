@@ -10,6 +10,8 @@ function WorkspaceLayout() {
     sessionStorage.getItem("driftmonitor_user") || "null"
   );
 
+  const isViewer = user?.role === "viewer";
+const isAdmin = user?.role === "admin";
   const initials =
     user?.name
       ?.split(" ")
@@ -55,7 +57,6 @@ function WorkspaceLayout() {
           <span>DriftMonitor</span>
         </NavLink>
 
-
         <nav className="app-main-nav">
 
           <NavLink
@@ -77,14 +78,16 @@ function WorkspaceLayout() {
             Models
           </NavLink>
 
-          <NavLink
-            to="/app/datasets"
-            className={({ isActive }) =>
-              `app-nav-link ${isActive ? "active" : ""}`
-            }
-          >
-            Datasets
-          </NavLink>
+          {!isViewer && (
+            <NavLink
+              to="/app/datasets"
+              className={({ isActive }) =>
+                `app-nav-link ${isActive ? "active" : ""}`
+              }
+            >
+              Datasets
+            </NavLink>
+          )}
 
           <NavLink
             to="/app/analyses"
@@ -94,9 +97,18 @@ function WorkspaceLayout() {
           >
             Analyses
           </NavLink>
+          {isAdmin && (
+  <NavLink
+    to="/app/settings"
+    className={({ isActive }) =>
+      `app-nav-link ${isActive ? "active" : ""}`
+    }
+  >
+    Settings
+  </NavLink>
+)}
 
         </nav>
-
 
         {/* ==================================================
             USER
@@ -134,7 +146,6 @@ function WorkspaceLayout() {
         </div>
 
       </header>
-
 
       {/* ==================================================
           PAGE

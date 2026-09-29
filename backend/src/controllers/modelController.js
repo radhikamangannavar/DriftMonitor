@@ -10,15 +10,16 @@ const create = async (req, res, next) => {
   try {
     const {
       name,
-      organizationId,
       riskProfile,
     } = req.body;
 
-    if (!name || !organizationId) {
+    const organizationId =
+      req.session.organizationId;
+
+    if (!name) {
       return res.status(400).json({
         success: false,
-        message:
-          "name and organizationId are required",
+        message: "name is required",
       });
     }
 
@@ -91,24 +92,15 @@ const updateConfiguration = async (
   try {
     const { modelId } = req.params;
 
-    const {
-      organizationId,
-      configuration,
-    } = req.body;
+    const organizationId =
+      req.session.organizationId;
 
-    if (!organizationId) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "organizationId is required",
-      });
-    }
+    const { configuration } = req.body;
 
     if (!configuration) {
       return res.status(400).json({
         success: false,
-        message:
-          "configuration is required",
+        message: "configuration is required",
       });
     }
 
